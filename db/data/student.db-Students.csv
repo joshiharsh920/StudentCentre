@@ -1,0 +1,6 @@
+ID;firstName;lastName;email;phone;dateOfBirth;gender;country_code;address
+10000000-0000-0000-0000-000000000001;Aarav;Sharma;aarav.sharma@example.com;+919876543210;2006-05-14;Male;IN;Mumbai, Maharashtra
+10000000-0000-0000-0000-000000000002;Ananya;Patel;ananya.patel@example.com;+919812345678;2005-11-22;Female;IN;Ahmedabad, Gujarat
+10000000-0000-0000-0000-000000000003;Rohan;Verma;rohan.verma@example.com;+919900112233;2006-02-08;Male;IN;New Delhi, Delhi
+10000000-0000-0000-0000-000000000004;Ishita;Singh;ishita.singh@example.com;+919711223344;2005-08-17;Female;IN;Lucknow, Uttar Pradesh
+10000000-0000-0000-0000-000000000005;Kabir;Mehta;kabir.mehta@example.com;+919855667788;2006-01-30;Male;IN;Pune, Maharashtra
