@@ -1,0 +1,60 @@
+<mvc:View
+    controllerName="centralstudentcentre.controller.Home"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="studentPage" title="Students">
+        <content>
+            <Table
+                id="studentTable"
+                items="{/Student}"
+                growing="true"
+                growingScrollToLoad="true"
+                noDataText="No student records found">
+                <headerToolbar>
+                    <OverflowToolbar id="OF1">
+                        <Title id="student1" text="Student Details" level="H2" />
+                        <ToolbarSpacer id="TS1"/>
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                    <Column minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="Name" />
+                    </Column>
+                    <Column minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="Email" />
+                    </Column>
+                    <Column minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="Phone" />
+                    </Column>
+                    <Column minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="Date of Birth" />
+                    </Column>
+                    <Column minScreenWidth="Desktop" demandPopin="true">
+                        <Text text="Gender" />
+                    </Column>
+                    <Column minScreenWidth="Desktop" demandPopin="true">
+                        <Text text="Country" />
+                    </Column>
+                    <Column minScreenWidth="Desktop" demandPopin="true">
+                        <Text text="Address" />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem vAlign="Middle">
+                        <cells>
+                            <ObjectIdentifier
+                                title="{= ${firstName} + ' ' + ${lastName} }"
+                                text="{ID}" />
+                            <Link text="{email}" href="{= 'mailto:' + ${email} }" />
+                            <Link text="{phone}" href="{= 'tel:' + ${phone} }" />
+                            <Text text="{dateOfBirth}" />
+                            <Text text="{gender}" />
+                            <Text text="{country_code}" />
+                            <Text text="{address}" wrapping="true" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>

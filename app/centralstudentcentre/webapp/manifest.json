@@ -43,7 +43,7 @@
     }
   },
   "sap.ui5": {
-    "flexEnabled": true,
+    "flexEnabled": false,
     "dependencies": {
       "minUI5Version": "1.152.0",
       "libs": {
@@ -102,8 +102,8 @@
       ],
       "targets": {
         "TargetHome": {
-          "id": "Home",
-          "name": "Home"
+          "id": "Student",
+          "name": "views.student"
         }
       }
     },
