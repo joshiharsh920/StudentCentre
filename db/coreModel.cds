@@ -17,15 +17,13 @@ context Student {
 
         country         : Country;
         address         : String(500);
+        city            : String(30);
 
         academicRecords : Composition of many AcademicRecords
                               on academicRecords.student = $self;
 
         examResults     : Composition of many ExamResults
                               on examResults.student = $self;
-
-        preferences     : Composition of many Preferences
-                              on preferences.student = $self;
 
         allotment       : Association to one Allotments
                               on allotment.student = $self;
@@ -81,12 +79,6 @@ context Student {
         course       : Association to Courses;
         totalSeats   : Integer;
         minimumScore : Decimal(10, 2);
-    }
-
-    entity Preferences : cuid, managed {
-        student         : Association to Students;
-        collegeCourse   : Association to CollegeCourses;
-        preferenceOrder : Integer;
     }
 
     entity Allotments : cuid, managed {

@@ -1,60 +1,114 @@
 <mvc:View
-    controllerName="centralstudentcentre.controller.Home"
+    controllerName="centralstudentcentre.controller.Student"
     xmlns:mvc="sap.ui.core.mvc"
+    xmlns:l="sap.ui.layout"
     xmlns="sap.m">
     <Page id="studentPage" title="Students">
         <content>
-            <Table
-                id="studentTable"
-                items="{/Student}"
-                growing="true"
-                growingScrollToLoad="true"
-                noDataText="No student records found">
-                <headerToolbar>
-                    <OverflowToolbar id="OF1">
-                        <Title id="student1" text="Student Details" level="H2" />
-                        <ToolbarSpacer id="TS1"/>
-                    </OverflowToolbar>
-                </headerToolbar>
-                <columns>
-                    <Column minScreenWidth="Tablet" demandPopin="true">
-                        <Text text="Name" />
-                    </Column>
-                    <Column minScreenWidth="Tablet" demandPopin="true">
-                        <Text text="Email" />
-                    </Column>
-                    <Column minScreenWidth="Tablet" demandPopin="true">
-                        <Text text="Phone" />
-                    </Column>
-                    <Column minScreenWidth="Tablet" demandPopin="true">
-                        <Text text="Date of Birth" />
-                    </Column>
-                    <Column minScreenWidth="Desktop" demandPopin="true">
-                        <Text text="Gender" />
-                    </Column>
-                    <Column minScreenWidth="Desktop" demandPopin="true">
-                        <Text text="Country" />
-                    </Column>
-                    <Column minScreenWidth="Desktop" demandPopin="true">
-                        <Text text="Address" />
-                    </Column>
-                </columns>
-                <items>
-                    <ColumnListItem vAlign="Middle">
-                        <cells>
-                            <ObjectIdentifier
-                                title="{= ${firstName} + ' ' + ${lastName} }"
-                                text="{ID}" />
-                            <Link text="{email}" href="{= 'mailto:' + ${email} }" />
-                            <Link text="{phone}" href="{= 'tel:' + ${phone} }" />
-                            <Text text="{dateOfBirth}" />
-                            <Text text="{gender}" />
-                            <Text text="{country_code}" />
-                            <Text text="{address}" wrapping="true" />
-                        </cells>
-                    </ColumnListItem>
-                </items>
-            </Table>
+            <VBox class="sapUiResponsiveContentPadding studentPageContent">
+                <Panel
+                    headerText="Student Details"
+                    expandable="false"
+                    class="studentSectionPanel">
+                    <content>
+                        <l:Grid
+                            defaultSpan="XL3 L4 M6 S12"
+                            hSpacing="1"
+                            vSpacing="0"
+                            width="100%">
+                    <VBox class="studentFormField">
+                        <Label text="First Name" labelFor="firstNameInput" />
+                        <Input id="firstNameInput" value="{draft>/firstName}" maxLength="100" width="100%" />
+                    </VBox>
+                    <VBox class="studentFormField">
+                        <Label text="Last Name" labelFor="lastNameInput" />
+                        <Input id="lastNameInput" value="{draft>/lastName}" maxLength="100" width="100%" />
+                    </VBox>
+                    <VBox class="studentFormField">
+                        <Label text="Email" labelFor="emailInput" />
+                        <Input id="emailInput" value="{draft>/email}" type="Email" maxLength="255" width="100%" />
+                    </VBox>
+                    <VBox class="studentFormField">
+                        <Label text="Phone" labelFor="phoneInput" />
+                        <Input id="phoneInput" value="{draft>/phone}" type="Tel" maxLength="15" width="100%" />
+                    </VBox>
+                    <VBox class="studentFormField">
+                        <Label text="Date of Birth" labelFor="dateOfBirthInput" />
+                        <DatePicker
+                            id="dateOfBirthInput"
+                            value="{draft>/dateOfBirth}"
+                            valueFormat="yyyy-MM-dd"
+                            displayFormat="medium"
+                            width="100%" />
+                    </VBox>
+                    <VBox class="studentFormField">
+                        <Label text="Gender" labelFor="genderInput" />
+                        <Input id="genderInput" value="{draft>/gender}" maxLength="20" width="100%" />
+                    </VBox>
+                    <VBox class="studentFormField">
+                        <Label text="Country" labelFor="countryInput" />
+                        <Input id="countryInput" value="{draft>/country_code}" maxLength="3" width="100%" />
+                    </VBox>
+                    <VBox class="studentFormField">
+                        <layoutData>
+                            <l:GridData span="XL6 L8 M12 S12" />
+                        </layoutData>
+                        <Label text="Address" labelFor="addressInput" />
+                        <TextArea
+                            id="addressInput"
+                            value="{draft>/address}"
+                            maxLength="500"
+                            rows="3"
+                            width="100%" />
+                    </VBox>
+                        </l:Grid>
+                    </content>
+                </Panel>
+
+                <Table
+                    id="academicRecordsTable"
+                    items="{path: 'draft>/academicRecords'}"
+                    growing="true"
+                    growingScrollToLoad="true"
+                    sticky="ColumnHeaders,HeaderToolbar"
+                    class="sapUiMediumMarginTop studentSectionTable"
+                    noDataText="No academic records added yet">
+                    <headerToolbar>
+                        <OverflowToolbar>
+                            <Title text="Academic Records" level="H2" />
+                            <ToolbarSpacer />
+                            <Button
+                                text="Add"
+                                icon="sap-icon://add"
+                                type="Emphasized"
+                                press=".onAddAcademicRecord" />
+                        </OverflowToolbar>
+                    </headerToolbar>
+                    <columns>
+                        <Column width="11rem"><Text text="Qualification" /></Column>
+                        <Column width="13rem" minScreenWidth="Tablet" demandPopin="true"><Text text="Board" /></Column>
+                        <Column width="16rem" minScreenWidth="Tablet" demandPopin="true"><Text text="Institution" /></Column>
+                        <Column width="9rem" minScreenWidth="Desktop" demandPopin="true" hAlign="End"><Text text="Passing Year" /></Column>
+                        <Column width="10rem" minScreenWidth="Desktop" demandPopin="true" hAlign="End"><Text text="Obtained Marks" /></Column>
+                        <Column width="10rem" minScreenWidth="Desktop" demandPopin="true" hAlign="End"><Text text="Maximum Marks" /></Column>
+                        <Column width="8rem" minScreenWidth="Tablet" demandPopin="true" hAlign="End"><Text text="Percentage" /></Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Input value="{draft>qualification}" maxLength="50" />
+                                <Input value="{draft>board}" maxLength="100" />
+                                <Input value="{draft>institution}" maxLength="200" />
+                                <Input value="{draft>passingYear}" type="Number" textAlign="End" />
+                                <Input value="{draft>obtainedMarks}" type="Number" textAlign="End" />
+                                <Input value="{draft>maximumMarks}" type="Number" textAlign="End" />
+                                <Input value="{draft>percentage}" type="Number" textAlign="End" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+
         </content>
     </Page>
 </mvc:View>

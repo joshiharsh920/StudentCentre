@@ -1,1 +1,19 @@
-/* Enter your custom styles here */
+.studentPageContent {
+    box-sizing: border-box;
+    max-width: 100rem;
+    margin: 0 auto;
+}
+
+.studentSectionPanel,
+.studentSectionTable {
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.studentFormField {
+    padding-bottom: 0.75rem;
+}
+
+.studentFormField .sapMLabel {
+    padding-bottom: 0.25rem;
+}
