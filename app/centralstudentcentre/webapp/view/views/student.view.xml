@@ -96,7 +96,21 @@
                     <items>
                         <ColumnListItem>
                             <cells>
-                                <Input value="{draft>qualification}" maxLength="50" />
+                                <ComboBox
+                    width="100%"
+                    selectedKey="{draft>qualification}"
+                    items="{
+                        path: 'comboModel>/Qualifications',
+                        parameters: {
+                            $select: 'code,name',
+                            $orderby: 'name'
+                        }
+                    }">
+
+                    <core:Item
+                        key="{comboModel>code}"
+                        text="{comboModel>name}" />
+                </ComboBox>
                                 <Input value="{draft>board}" maxLength="100" />
                                 <Input value="{draft>institution}" maxLength="200" />
                                 <Input value="{draft>passingYear}" type="Number" textAlign="End" />
