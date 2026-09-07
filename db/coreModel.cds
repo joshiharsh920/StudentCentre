@@ -31,7 +31,7 @@ context Student {
 
     entity AcademicRecords : cuid, managed {
         student       : Association to Students;
-        qualification : String(50); // 10th, 12th, Diploma
+        qualification : String(10); // 10th, 12th, Diploma
         board         : String(100);
         institution   : String(200);
         passingYear   : Integer;
@@ -87,6 +87,13 @@ context Student {
         roundNumber   : Integer;
         status        : String(30); // ALLOTTED, ACCEPTED, REJECTED
         allottedAt    : Timestamp;
+    }
+}
+
+context extras {
+    entity Qualifications {
+        key code : Integer;
+            name : String;
     }
 }
 
