@@ -1,7 +1,8 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/ui/model/json/JSONModel"
-], (Controller, JSONModel) => {
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/model/odata/v4/ODataModel"
+], (Controller, JSONModel, ODataModel) => {
     "use strict";
 
     return Controller.extend("centralstudentcentre.controller.Student", {
@@ -17,6 +18,15 @@ sap.ui.define([
                 address: "",
                 academicRecords: []
             }), "draft");
+
+            const oComboModel = new ODataModel({
+                serviceUrl: "/odata/v4/StudentServ/",
+                synchronizationMode: "None",
+                operationMode: "Server",
+                autoExpandSelect: true
+            });
+
+            this.getView().setModel(oComboModel, "comboModel");
         },
 
         onAddAcademicRecord() {

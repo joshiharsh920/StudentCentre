@@ -2,12 +2,13 @@
     controllerName="centralstudentcentre.controller.Student"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:l="sap.ui.layout"
-    xmlns="sap.m">
-    <Page id="studentPage" title="Students">
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Page id="studentPage" title="Student Registration" titleAlignment="Center">
         <content>
             <VBox class="sapUiResponsiveContentPadding studentPageContent">
                 <Panel
-                    headerText="Student Details"
+                    
                     expandable="false"
                     class="studentSectionPanel">
                     <content>
