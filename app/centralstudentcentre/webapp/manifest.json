@@ -69,6 +69,11 @@
         "settings": {
           "operationMode": "Server",
           "autoExpandSelect": true,
+          "groupProperties": {
+            "studentRegistration": {
+              "submit": "API"
+            }
+          },
           "earlyRequests": true
         }
       }
