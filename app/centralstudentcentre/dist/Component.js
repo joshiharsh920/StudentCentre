@@ -1,2 +1,2 @@
-sap.ui.define(["sap/ui/core/UIComponent","centralstudentcentre/model/models"],(e,t)=>{"use strict";return e.extend("centralstudentcentre.Component",{metadata:{manifest:"json",interfaces:["sap.ui.core.IAsyncContentCreation"]},init(){e.prototype.init.apply(this,arguments);this.setModel(t.createDeviceModel(),"device");this.getRouter().initialize()}})});
+sap.ui.define(["sap/ui/core/UIComponent"],t=>{"use strict";return t.extend("centralstudentcentre.Component",{metadata:{manifest:"json",interfaces:["sap.ui.core.IAsyncContentCreation"]},init(){t.prototype.init.apply(this,arguments);this.getRouter().initialize()}})});
 //# sourceMappingURL=Component.js.map

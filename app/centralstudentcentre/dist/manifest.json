@@ -10,11 +10,10 @@
 			]
 		},
 		"applicationVersion": {
-			"version": "0.0.1"
+			"version": "0.0.5"
 		},
 		"title": "{{appTitle}}",
 		"description": "{{appDescription}}",
-		"resources": "resources.json",
 		"sourceTemplate": {
 			"id": "@sap/generator-fiori:basic",
 			"version": "1.20.0",
@@ -63,7 +62,7 @@
 	"sap.ui5": {
 		"flexEnabled": false,
 		"dependencies": {
-			"minUI5Version": "1.152.0",
+			"minUI5Version": "1.120.0",
 			"libs": {
 				"sap.m": {},
 				"sap.ui.core": {},
@@ -88,6 +87,7 @@
 				"dataSource": "mainService",
 				"preload": true,
 				"settings": {
+					"synchronizationMode": "None",
 					"operationMode": "Server",
 					"autoExpandSelect": true,
 					"groupProperties": {
@@ -115,8 +115,7 @@
 				"type": "View",
 				"viewType": "XML",
 				"path": "centralstudentcentre.view",
-				"async": true,
-				"viewPath": "centralstudentcentre.view"
+				"async": true
 			},
 			"routes": [
 				{
@@ -143,7 +142,7 @@
 		"flexBundle": false
 	},
 	"sap.cloud": {
-		"public": true,
+		"public": false,
 		"service": "centralstudentcentre"
 	}
 }

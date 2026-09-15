@@ -11,12 +11,13 @@ sap.ui.define([
         onInit() {
             const oModel = this.getOwnerComponent().getModel();
             // Keep the new student and its academic records pending until Submit.
-            this.clearStudentData();
+            const oContext = this.clearStudentData();
             // Cancellation when the view is destroyed is expected.
             oContext.created().catch(() => { });
             this.getView().setBindingContext(oContext);
         },
         clearStudentData: function () {
+            var oModel= this.getOwnerComponent().getModel();
             this._oStudentBinding = oModel.bindList("/Student", undefined, undefined, undefined, {
                 $$updateGroupId: UPDATE_GROUP
             });
@@ -31,6 +32,7 @@ sap.ui.define([
                 address: "",
                 academicRecords: []
             });
+            return oContext;
         },
 
         onAddAcademicRecord() {
