@@ -91,6 +91,11 @@ context Student {
 }
 
 context extras {
+    entity Boards {
+        key bcode : Integer;
+            name  : String;
+    }
+
     entity Qualifications {
         key code : Integer;
             name : String;
