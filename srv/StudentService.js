@@ -1,11 +1,11 @@
 import cds from "@sap/cds";
 
 export default cds.service.impl(function () {
-    const { Students } = this.entities;
+    const { Student } = this.entities;
 
-    this.before("CREATE", Students, function (req) {
+    this.before("CREATE", Student, function (req) {
         if (!req.data.firstName?.trim()) {
-            req.reject(400, "First name is required");
+            req.error(400, "First name is required", "firstName");
         }
     });
 });
