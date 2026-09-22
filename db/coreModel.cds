@@ -29,6 +29,7 @@ context Student {
                               on allotment.student = $self;
     }
 
+
     entity AcademicRecords : cuid, managed {
         student       : Association to Students;
         qualification : String(10); // 10th, 12th, Diploma
