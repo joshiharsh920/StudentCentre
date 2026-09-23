@@ -135,5 +135,35 @@
   "sap.cloud": {
     "public": false,
     "service": "centralstudentcentre"
-  }
+  },
+    "sap.bpa.task": {
+       "_version": "1.0.0",
+       "category": "approval",
+        "inputs": {
+            "applicationID": {
+                "type": "string",
+                "required": true
+            },
+            "mode": {
+                "type": "string",
+                "required": false
+            }
+        },
+        "outputs": {
+            "remarks": {
+                "type": "string",
+                "required": false
+            }
+        },
+        "outcomes": [
+            {
+                "id": "APPROVE",
+                "label": "Approve"
+            },
+            {
+                "id": "REJECT",
+                "label": "Reject"
+            }
+        ]
+    }
 }

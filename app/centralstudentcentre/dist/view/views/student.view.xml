@@ -108,12 +108,23 @@
                         key="{code}"
                         text="{name}" />
                 </ComboBox>
-                                <Input value="{board}" maxLength="100" />
+                                <ComboBox
+                                    width="100%"
+                                    selectedKey="{board}"
+                                    items="{
+                                        path: '/Boards',
+                                        parameters: {
+                                            $select: 'bcode,name',
+                                            $orderby: 'name'
+                                        }
+                                    }">
+                                    <core:Item key="{bcode}" text="{name}" />
+                                </ComboBox>
                                 <Input value="{institution}" maxLength="200" />
-                                <Input value="{passingYear}" type="Number" textAlign="End" />
-                                <Input value="{obtainedMarks}" type="Number" textAlign="End" />
-                                <Input value="{maximumMarks}" type="Number" textAlign="End" />
-                                <Input value="{percentage}" type="Number" textAlign="End" />
+                                <Input value="{passingYear}" textAlign="End" />
+                                <Input value="{obtainedMarks}" textAlign="End" />
+                                <Input value="{maximumMarks}" textAlign="End" />
+                                <Input value="{percentage}" textAlign="End" />
                             </cells>
                         </ColumnListItem>
                     </items>

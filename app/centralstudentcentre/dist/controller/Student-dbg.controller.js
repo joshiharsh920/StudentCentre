@@ -1,22 +1,23 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/m/MessageBox",
-    "sap/m/MessageToast"
-], (Controller, MessageBox, MessageToast) => {
+    "sap/m/MessageToast",
+    "sap/ui/core/Messaging"
+], (Controller, MessageBox, MessageToast, Messaging) => {
     "use strict";
 
     const UPDATE_GROUP = "studentRegistration";
 
     return Controller.extend("centralstudentcentre.controller.Student", {
         onInit() {
-            const oModel = this.getOwnerComponent().getModel();
             // Keep the new student and its academic records pending until Submit.
-            const oContext = this.clearStudentData();
-            // Cancellation when the view is destroyed is expected.
-            oContext.created().catch(() => { });
-            this.getView().setBindingContext(oContext);
+            this.clearStudentData();
         },
         clearStudentData: function () {
+            this.getView().setBindingContext(null);
+            if (this._oStudentBinding) {
+                this._oStudentBinding.destroy();
+            }
             var oModel= this.getOwnerComponent().getModel();
             this._oStudentBinding = oModel.bindList("/Student", undefined, undefined, undefined, {
                 $$updateGroupId: UPDATE_GROUP
@@ -32,6 +33,9 @@ sap.ui.define([
                 address: "",
                 academicRecords: []
             });
+            // Cancellation when the view is destroyed is expected.
+            oContext.created().catch(() => { });
+            this.getView().setBindingContext(oContext);
             return oContext;
         },
 
@@ -47,11 +51,21 @@ sap.ui.define([
             });
         },
 
+        _getBackendErrors(oModel) {
+            return Messaging.getMessageModel().getData().filter((oMessage) =>
+                oMessage.getProcessor() === oModel && oMessage.getType() === "Error"
+            );
+        },
+
         async onSubmit() {
             const oView = this.getView();
             if (oView.getBusy()) {
                 return;
             }
+            const oModel = this.getOwnerComponent().getModel();
+            // Remove the previous server errors so corrected data can be retried.
+            // Client-side validation messages use a different message processor.
+            Messaging.removeMessages(this._getBackendErrors(oModel));
             const aInvalidControls = oView.findAggregatedObjects(true, (oControl) =>
                 typeof oControl.getValueState === "function" && oControl.getValueState() === "Error"
             );
@@ -60,13 +74,16 @@ sap.ui.define([
                 return;
             }
 
-            const oModel = this.getOwnerComponent().getModel();
             oView.setBusy(true);
             try {
                 await oModel.submitBatch(UPDATE_GROUP);
                 // Individual requests can fail even when the batch itself succeeds.
-                if (oModel.hasPendingChanges(UPDATE_GROUP)) {
-                    MessageBox.error("The student could not be saved. Check your entries and try again.");
+                const aErrors = this._getBackendErrors(oModel);
+                if (aErrors.length || oModel.hasPendingChanges(UPDATE_GROUP)) {
+                    const sMessage = [...new Set(aErrors.map((oMessage) =>
+                        oMessage.getMessage()
+                    ))].join("\n");
+                    MessageBox.error(sMessage || "The student could not be saved. Check your entries and try again.");
                     return;
                 }
                 this.clearStudentData();
