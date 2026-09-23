@@ -11,6 +11,9 @@ service StudentService @(path: 'StudentServ') {
                                where
                                    student.email = $user;
 
-    entity Documents        as projection on db.workflow.Documents;
-    action submitApplication(applicationID: UUID) returns Applications;
+    action submitApplication(applicationID: UUID)   returns Applications;
+
+    action updateApplicationStatus(applicationID: UUID,
+                                   decision: String,
+                                   remarks: String) returns Applications;
 }
