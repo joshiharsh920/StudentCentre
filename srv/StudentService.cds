@@ -7,9 +7,7 @@ service StudentService @(path: 'StudentServ') {
     entity AcademicRecords  as projection on db.Student.AcademicRecords;
     entity CompetitiveExams as projection on db.Student.CompetitiveExams;
 
-    entity Applications     as projection on db.workflow.Applications
-                               where
-                                   student.email = $user;
+    entity Applications     as projection on db.workflow.Applications;
 
     action submitApplication(applicationID: UUID)   returns Applications;
 

@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "type": "module",
   "dependencies": {
-    "@cap-js/hana": "^3.1.0",
+    "@cap-js/hana": "^3.1.1",
+    "@sap-cloud-sdk/http-client": "^4.9.1",
     "@sap/approuter": "^23.0.0",
-    "@sap/cds": "^10",
+    "@sap/cds": "^10.1.1",
     "@sap/xssec": "^4"
   },
   "devDependencies": {
@@ -28,7 +29,24 @@
   ],
   "cds": {
     "requires": {
+      "db": {
+        "kind": "sqlite"
+      },
+      "BPA": {
+        "kind": "rest",
+        "credentials": {
+          "destination": "BPA_API"
+        }
+      },
+      "[hybrid]": {
+        "db": {
+          "kind": "hana"
+        }
+      },
       "[production]": {
+        "db": {
+          "kind": "hana"
+        },
         "auth": "xsuaa"
       }
     }

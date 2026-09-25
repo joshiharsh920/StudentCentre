@@ -18,7 +18,7 @@ sap.ui.define([
             if (this._oStudentBinding) {
                 this._oStudentBinding.destroy();
             }
-            var oModel= this.getOwnerComponent().getModel();
+            var oModel = this.getOwnerComponent().getModel();
             this._oStudentBinding = oModel.bindList("/Student", undefined, undefined, undefined, {
                 $$updateGroupId: UPDATE_GROUP
             });
@@ -86,6 +86,18 @@ sap.ui.define([
                     MessageBox.error(sMessage || "The student could not be saved. Check your entries and try again.");
                     return;
                 }
+                // Get the ID of the Student that was just created
+                const oStudentContext = oView.getBindingContext();
+                const sApplicationID = oStudentContext.getProperty("ID");
+
+                console.log("Student ID:", sApplicationID);
+
+                // Call CAP submitApplication action
+                const oAction = oModel.bindContext("/submitApplication(...)");
+
+                oAction.setParameter("applicationID", sApplicationID);
+
+                await oAction.execute();
                 this.clearStudentData();
                 MessageToast.show("Student saved successfully.");
             } catch (oError) {
