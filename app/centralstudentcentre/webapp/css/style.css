@@ -14,6 +14,35 @@
     padding-bottom: 0.75rem;
 }
 
+/* Let each column and its controls shrink with the available screen width. */
+.academicRecordsFitTable {
+    min-width: 0;
+    width: 100%;
+}
+
+.academicRecordsFitTable .sapMListTblCell,
+.academicRecordsFitTable .sapMListTblHeaderCell {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+    overflow-wrap: anywhere;
+}
+
+.academicRecordsFitTable .sapMInputBase,
+.academicRecordsFitTable .sapMVBox,
+.academicRecordsFitTable .sapUiFup {
+    min-width: 0;
+    max-width: 100%;
+}
+
+.academicRecordsFitTable .sapMText {
+    overflow-wrap: anywhere;
+}
+
+.academicDocumentCell,
+.academicDocumentCell .sapMFlexItem {
+    min-width: 0;
+}
+
 .studentFormField .sapMLabel {
     padding-bottom: 0.25rem;
 }

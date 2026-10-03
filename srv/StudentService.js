@@ -7,6 +7,11 @@ export default class StudentService extends cds.ApplicationService {
 
         const BPA = await cds.connect.to("BPA");
 
+        this.before("CREATE", Student, function (req) {
+            const student = req.data;
+            console.log("Creating student:", student);
+        });
+
         this.on("submitApplication", async (req) => {
             // Your UI currently sends Student.ID in this parameter.
             const studentID = req.data.applicationID;
@@ -73,86 +78,86 @@ export default class StudentService extends cds.ApplicationService {
         });
 
         this.on("updateApplicationStatus", async (req) => {
-    const { applicationID, decision, remarks } = req.data;
-    const status = String(decision ?? "").toUpperCase();
+            const { applicationID, decision, remarks } = req.data;
+            const status = String(decision ?? "").toUpperCase();
 
-    console.log("BPA applicationID:", applicationID);
-    console.log("Request tenant:", req.tenant);
-    console.log("Service entity:", Applications.name);
+            console.log("BPA applicationID:", applicationID);
+            console.log("Request tenant:", req.tenant);
+            console.log("Service entity:", Applications.name);
 
-    if (!applicationID) {
-        return req.reject(400, "applicationID was not provided");
-    }
+            if (!applicationID) {
+                return req.reject(400, "applicationID was not provided");
+            }
 
-    if (!["APPROVED", "REJECTED"].includes(status)) {
-        return req.reject(400, "Decision must be APPROVED or REJECTED");
-    }
+            if (!["APPROVED", "REJECTED"].includes(status)) {
+                return req.reject(400, "Decision must be APPROVED or REJECTED");
+            }
 
-    let application;
+            let application;
 
-    try {
-        application = await SELECT.one
-            .from(Applications)
-            .where({ ID: applicationID });
+            try {
+                application = await SELECT.one
+                    .from(Applications)
+                    .where({ ID: applicationID });
 
-        console.log(
-            "Found through service entity:",
-            application?.ID ?? "NO"
-        );
+                console.log(
+                    "Found through service entity:",
+                    application?.ID ?? "NO"
+                );
 
-        // Diagnostic read of the underlying CDS database entity.
-        const dbEntity =
-            cds.model.definitions["student.db.workflow.Applications"];
+                // Diagnostic read of the underlying CDS database entity.
+                const dbEntity =
+                    cds.model.definitions["student.db.workflow.Applications"];
 
-        if (dbEntity) {
-            const dbApplication = await cds.db.run(
-                SELECT.one
-                    .from(dbEntity)
-                    .columns("ID", "student_ID", "status")
-                    .where({ ID: applicationID })
-            );
+                if (dbEntity) {
+                    const dbApplication = await cds.db.run(
+                        SELECT.one
+                            .from(dbEntity)
+                            .columns("ID", "student_ID", "status")
+                            .where({ ID: applicationID })
+                    );
 
-            console.log(
-                "Found in bound database:",
-                dbApplication?.ID ?? "NO"
-            );
-            console.log(
-                "Database row's student_ID:",
-                dbApplication?.student_ID ?? "NO"
-            );
-        } else {
-            console.log(
-                "Database entity student.db.workflow.Applications " +
-                "not found in deployed CDS model"
-            );
-        }
-    } catch (error) {
-        console.error("Application lookup failed:", error);
-        return req.reject(500, "Could not read the application");
-    }
+                    console.log(
+                        "Found in bound database:",
+                        dbApplication?.ID ?? "NO"
+                    );
+                    console.log(
+                        "Database row's student_ID:",
+                        dbApplication?.student_ID ?? "NO"
+                    );
+                } else {
+                    console.log(
+                        "Database entity student.db.workflow.Applications " +
+                        "not found in deployed CDS model"
+                    );
+                }
+            } catch (error) {
+                console.error("Application lookup failed:", error);
+                return req.reject(500, "Could not read the application");
+            }
 
-    if (!application) {
-        return req.reject(404, "Application not found");
-    }
+            if (!application) {
+                return req.reject(404, "Application not found");
+            }
 
-    try {
-        await UPDATE(Applications)
-            .set({
-                status,
-                verifiedAt: new Date(),
-                correctionReason:
-                    status === "REJECTED" ? remarks ?? null : null
-            })
-            .where({ ID: applicationID });
+            try {
+                await UPDATE(Applications)
+                    .set({
+                        status,
+                        verifiedAt: new Date(),
+                        correctionReason:
+                            status === "REJECTED" ? remarks ?? null : null
+                    })
+                    .where({ ID: applicationID });
 
-        return await SELECT.one
-            .from(Applications)
-            .where({ ID: applicationID });
-    } catch (error) {
-        console.error("Application update failed:", error);
-        return req.reject(500, "Could not update the application");
-    }
-});
+                return await SELECT.one
+                    .from(Applications)
+                    .where({ ID: applicationID });
+            } catch (error) {
+                console.error("Application update failed:", error);
+                return req.reject(500, "Could not update the application");
+            }
+        });
 
         return super.init();
     }

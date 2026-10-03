@@ -39,6 +39,11 @@ context Student {
         obtainedMarks : Decimal(7, 2);
         maximumMarks  : Decimal(7, 2);
         percentage    : Decimal(5, 2);
+        documentFileName : String(255);
+        documentMimeType : String(100) @Core.IsMediaType;
+        document : LargeBinary
+            @Core.MediaType: documentMimeType
+            @Core.ContentDisposition.Filename: documentFileName;
     }
 
     entity CompetitiveExams : cuid, managed {
