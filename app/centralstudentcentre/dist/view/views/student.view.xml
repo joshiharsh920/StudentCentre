@@ -3,111 +3,216 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:l="sap.ui.layout"
     xmlns="sap.m"
-    xmlns:core="sap.ui.core">
-    <Page id="studentPage" title="Student Registration" titleAlignment="Center">
+    xmlns:core="sap.ui.core"
+    xmlns:unified="sap.ui.unified"
+>
+    <Page
+        id="studentPage"
+        title="Student Registration"
+        titleAlignment="Center"
+    >
         <content>
             <VBox class="sapUiResponsiveContentPadding studentPageContent">
                 <Panel
-                    
                     expandable="false"
-                    class="studentSectionPanel">
+                    class="studentSectionPanel"
+                >
                     <content>
                         <l:Grid
                             defaultSpan="XL3 L4 M6 S12"
                             hSpacing="1"
                             vSpacing="0"
-                            width="100%">
-                    <VBox class="studentFormField">
-                        <Label text="First Name" labelFor="firstNameInput" />
-                        <Input id="firstNameInput" value="{firstName}" maxLength="100" width="100%" />
-                    </VBox>
-                    <VBox class="studentFormField">
-                        <Label text="Last Name" labelFor="lastNameInput" />
-                        <Input id="lastNameInput" value="{lastName}" maxLength="100" width="100%" />
-                    </VBox>
-                    <VBox class="studentFormField">
-                        <Label text="Email" labelFor="emailInput" />
-                        <Input id="emailInput" value="{email}" type="Email" maxLength="255" width="100%" />
-                    </VBox>
-                    <VBox class="studentFormField">
-                        <Label text="Phone" labelFor="phoneInput" />
-                        <Input id="phoneInput" value="{phone}" type="Tel" maxLength="15" width="100%" />
-                    </VBox>
-                    <VBox class="studentFormField">
-                        <Label text="Date of Birth" labelFor="dateOfBirthInput" />
-                        <DatePicker
-                            id="dateOfBirthInput"
-                            value="{dateOfBirth}"
-                            valueFormat="yyyy-MM-dd"
-                            displayFormat="medium"
-                            width="100%" />
-                    </VBox>
-                    <VBox class="studentFormField">
-                        <Label text="Gender" labelFor="genderInput" />
-                        <Input id="genderInput" value="{gender}" maxLength="20" width="100%" />
-                    </VBox>
-                    <VBox class="studentFormField">
-                        <Label text="Country" labelFor="countryInput" />
-                        <Input id="countryInput" value="{country_code}" maxLength="3" width="100%" />
-                    </VBox>
-                    <VBox class="studentFormField">
-                        <Label text="Address" labelFor="addressInput" />
-                        <Input
-                            id="addressInput"
-                            value="{address}"
-                            maxLength="500"
-                            width="100%" />
-                    </VBox>
+                            width="100%"
+                        >
+                            <VBox class="studentFormField">
+                                <Label
+                                    text="First Name"
+                                    labelFor="firstNameInput"
+                                />
+                                <Input
+                                    id="firstNameInput"
+                                    value="{firstName}"
+                                    maxLength="100"
+                                    width="100%"
+                                />
+                            </VBox>
+                            <VBox class="studentFormField">
+                                <Label
+                                    text="Last Name"
+                                    labelFor="lastNameInput"
+                                />
+                                <Input
+                                    id="lastNameInput"
+                                    value="{lastName}"
+                                    maxLength="100"
+                                    width="100%"
+                                />
+                            </VBox>
+                            <VBox class="studentFormField">
+                                <Label
+                                    text="Email"
+                                    labelFor="emailInput"
+                                />
+                                <Input
+                                    id="emailInput"
+                                    value="{email}"
+                                    type="Email"
+                                    maxLength="255"
+                                    width="100%"
+                                />
+                            </VBox>
+                            <VBox class="studentFormField">
+                                <Label
+                                    text="Phone"
+                                    labelFor="phoneInput"
+                                />
+                                <Input
+                                    id="phoneInput"
+                                    value="{phone}"
+                                    type="Tel"
+                                    maxLength="15"
+                                    width="100%"
+                                />
+                            </VBox>
+                            <VBox class="studentFormField">
+                                <Label
+                                    text="Date of Birth"
+                                    labelFor="dateOfBirthInput"
+                                />
+                                <DatePicker
+                                    id="dateOfBirthInput"
+                                    value="{dateOfBirth}"
+                                    valueFormat="yyyy-MM-dd"
+                                    displayFormat="medium"
+                                    width="100%"
+                                />
+                            </VBox>
+                            <VBox class="studentFormField">
+                                <Label
+                                    text="Gender"
+                                    labelFor="genderInput"
+                                />
+                                <Input
+                                    id="genderInput"
+                                    value="{gender}"
+                                    maxLength="20"
+                                    width="100%"
+                                />
+                            </VBox>
+                            <VBox class="studentFormField">
+                                <Label
+                                    text="Country"
+                                    labelFor="countryInput"
+                                />
+                                <Input
+                                    id="countryInput"
+                                    value="{country_code}"
+                                    maxLength="3"
+                                    width="100%"
+                                />
+                            </VBox>
+                            <VBox class="studentFormField">
+                                <Label
+                                    text="Address"
+                                    labelFor="addressInput"
+                                />
+                                <Input
+                                    id="addressInput"
+                                    value="{address}"
+                                    maxLength="500"
+                                    width="100%"
+                                />
+                            </VBox>
                         </l:Grid>
                     </content>
                 </Panel>
 
                 <Table
                     id="academicRecordsTable"
+                    fixedLayout="true"
+                    width="100%"
                     items="{path: 'academicRecords'}"
                     growing="true"
                     growingScrollToLoad="true"
-                    sticky="ColumnHeaders,HeaderToolbar"
-                    class="sapUiMediumMarginTop studentSectionTable"
-                    noDataText="No academic records added yet">
+                    class="sapUiMediumMarginTop studentSectionTable academicRecordsFitTable"
+                    noDataText="No academic records added yet"
+                >
                     <headerToolbar>
                         <OverflowToolbar>
-                            <Title text="Academic Records" level="H2" />
+                            <Title
+                                text="Academic Records"
+                                level="H2"
+                            />
                             <ToolbarSpacer />
                             <Button
                                 text="Add"
                                 icon="sap-icon://add"
                                 type="Emphasized"
-                                press=".onAddAcademicRecord" />
+                                press=".onAddAcademicRecord"
+                            />
                         </OverflowToolbar>
                     </headerToolbar>
                     <columns>
-                        <Column width="11rem"><Text text="Qualification" /></Column>
-                        <Column width="13rem" minScreenWidth="Tablet" demandPopin="true"><Text text="Board" /></Column>
-                        <Column width="16rem" minScreenWidth="Tablet" demandPopin="true"><Text text="Institution" /></Column>
-                        <Column width="9rem" minScreenWidth="Desktop" demandPopin="true" hAlign="End"><Text text="Passing Year" /></Column>
-                        <Column width="10rem" minScreenWidth="Desktop" demandPopin="true" hAlign="End"><Text text="Obtained Marks" /></Column>
-                        <Column width="10rem" minScreenWidth="Desktop" demandPopin="true" hAlign="End"><Text text="Maximum Marks" /></Column>
-                        <Column width="8rem" minScreenWidth="Tablet" demandPopin="true" hAlign="End"><Text text="Percentage" /></Column>
+                        <Column width="13%">
+                            <Text text="Qualification" />
+                        </Column>
+                        <Column
+                            width="14%"
+                        >
+                            <Text text="Board" />
+                        </Column>
+                        <Column
+                            width="18%"
+                        >
+                            <Text text="Institution" />
+                        </Column>
+                        <Column
+                            width="9%"
+                            hAlign="End"
+                        >
+                            <Text text="Passing Year" />
+                        </Column>
+                        <Column
+                            width="11%"
+                            hAlign="End"
+                        >
+                            <Text text="Obtained Marks" />
+                        </Column>
+                        <Column
+                            width="11%"
+                            hAlign="End"
+                        >
+                            <Text text="Maximum Marks" />
+                        </Column>
+                        <Column
+                            width="9%"
+                            hAlign="End"
+                        >
+                            <Text text="Percentage" />
+                        </Column>
+                        <Column width="15%">
+                            <Text text="Document" />
+                        </Column>
                     </columns>
                     <items>
-                        <ColumnListItem>
+                        <ColumnListItem vAlign="Middle">
                             <cells>
                                 <ComboBox
-                    width="100%"
-                    selectedKey="{qualification}"
-                    items="{
+                                    width="100%"
+                                    selectedKey="{qualification}"
+                                    items="{
                         path: '/Qualifications',
                         parameters: {
                             $select: 'code,name',
                             $orderby: 'name'
                         }
-                    }">
-
-                    <core:Item
-                        key="{code}"
-                        text="{name}" />
-                </ComboBox>
+                    }"
+                                >
+                                    <core:Item
+                                        key="{code}"
+                                        text="{name}"
+                                    />
+                                </ComboBox>
                                 <ComboBox
                                     width="100%"
                                     selectedKey="{board}"
@@ -117,25 +222,73 @@
                                             $select: 'bcode,name',
                                             $orderby: 'name'
                                         }
-                                    }">
-                                    <core:Item key="{bcode}" text="{name}" />
+                                    }"
+                                >
+                                    <core:Item
+                                        key="{bcode}"
+                                        text="{name}"
+                                    />
                                 </ComboBox>
-                                <Input value="{institution}" maxLength="200" />
-                                <Input value="{passingYear}" textAlign="End" />
-                                <Input value="{obtainedMarks}" textAlign="End" />
-                                <Input value="{maximumMarks}" textAlign="End" />
-                                <Input value="{percentage}" textAlign="End" />
+                                <Input
+                                    value="{institution}"
+                                    maxLength="200"
+                                />
+                                <Input
+                                    value="{passingYear}"
+                                    textAlign="End"
+                                />
+                                <Input
+                                    value="{obtainedMarks}"
+                                    textAlign="End"
+                                    change="onMarksChange"
+                                />
+                                <Input
+                                    value="{maximumMarks}"
+                                    textAlign="End"
+                                    change="onMarksChange"
+                                />
+                                <Input
+                                    value="{percentage}"
+                                    enabled="false"
+                                    textAlign="End"
+                                />
+                                <HBox alignItems="Center" width="100%" class="academicDocumentCell">
+                                    <unified:FileUploader
+                                        uploadOnChange="false"
+                                        sameFilenameAllowed="true"
+                                        change=".onAcademicDocumentChange"
+                                        buttonOnly="true"
+                                        buttonText=""
+                                        icon="sap-icon://upload"
+                                        tooltip="Select a document"
+                                    />
+                                    <Text
+                                        text="{documentFileName}"
+                                        tooltip="{documentFileName}"
+                                        wrapping="false"
+                                        visible="{= !!${documentFileName} }"
+                                        class="sapUiTinyMarginBegin"
+                                    >
+                                        <layoutData>
+                                            <FlexItemData growFactor="1" shrinkFactor="1" baseSize="0%" />
+                                        </layoutData>
+                                    </Text>
+                                </HBox>
                             </cells>
                         </ColumnListItem>
                     </items>
                 </Table>
             </VBox>
-
         </content>
         <footer>
             <OverflowToolbar>
                 <ToolbarSpacer />
-                <Button id="submitButton" text="Submit" type="Emphasized" press=".onSubmit" />
+                <Button
+                    id="submitButton"
+                    text="Submit"
+                    type="Emphasized"
+                    press=".onSubmit"
+                />
             </OverflowToolbar>
         </footer>
     </Page>

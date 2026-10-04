@@ -1,54 +1,55 @@
 {
-  "name": "CentralStudentCentre",
-  "version": "1.0.0",
-  "type": "module",
-  "dependencies": {
-    "@cap-js/hana": "^3.1.1",
-    "@sap-cloud-sdk/http-client": "^4.9.1",
-    "@sap/approuter": "^23.0.0",
-    "@sap/cds": "^10.1.1",
-    "@sap/xssec": "^4"
-  },
-  "devDependencies": {
-    "@cap-js/sqlite": "^3",
-    "@sap/cds-dk": "^10",
-    "cds-plugin-ui5": "^0.13.0",
-    "mbt": "^1.2.49",
-    "rimraf": "^5.0.5"
-  },
-  "scripts": {
-    "start": "cds-serve",
-    "watch-centralstudentcentre": "cds watch --open centralstudentcentre/index.html?sap-ui-xx-viewCache=false --livereload false",
-    "undeploy": "cf undeploy CentralStudentCentre --delete-services --delete-service-keys --delete-service-brokers",
-    "build": "rimraf resources mta_archives && mbt build --mtar archive",
-    "deploy": "cf deploy mta_archives/archive.mtar --retries 1"
-  },
-  "private": true,
-  "workspaces": [
-    "app/*"
-  ],
-  "cds": {
-    "requires": {
-      "db": {
-        "kind": "sqlite"
-      },
-      "BPA": {
-        "kind": "rest",
-        "credentials": {
-          "destination": "BPA_API"
-        }
-      },
-      "[hybrid]": {
-        "db": {
-          "kind": "hana"
-        }
-      },
-      "[production]": {
-        "db": {
-          "kind": "hana"
-        },
-        "auth": "xsuaa"
-      }
-    }
-  }
+	"name": "CentralStudentCentre",
+	"version": "1.0.0",
+	"type": "module",
+	"dependencies": {
+		"@cap-js/hana": "^3.1.1",
+		"@sap-cloud-sdk/http-client": "^4.9.1",
+		"@sap/approuter": "^23.0.0",
+		"@sap/cds": "^10.1.1",
+		"@sap/xssec": "^4"
+	},
+	"devDependencies": {
+		"@cap-js/sqlite": "^3",
+		"@sap/cds-dk": "^10",
+		"cds-plugin-ui5": "^0.13.0",
+		"mbt": "^1.2.49",
+		"rimraf": "^5.0.5",
+		"@sap/dev-cap-tools": "^1.31.0"
+	},
+	"scripts": {
+		"start": "cds-serve",
+		"watch-centralstudentcentre": "cds watch --open centralstudentcentre/index.html?sap-ui-xx-viewCache=false --livereload false",
+		"undeploy": "cf undeploy CentralStudentCentre --delete-services --delete-service-keys --delete-service-brokers",
+		"build": "rimraf resources mta_archives && mbt build --mtar archive",
+		"deploy": "cf deploy mta_archives/archive.mtar --retries 1"
+	},
+	"private": true,
+	"workspaces": [
+		"app/*"
+	],
+	"cds": {
+		"requires": {
+			"db": {
+				"kind": "sqlite"
+			},
+			"BPA": {
+				"kind": "rest",
+				"credentials": {
+					"destination": "BPA_API"
+				}
+			},
+			"[hybrid]": {
+				"db": {
+					"kind": "hana"
+				}
+			},
+			"[production]": {
+				"db": {
+					"kind": "hana"
+				},
+				"auth": "xsuaa"
+			}
+		}
+	}
 }

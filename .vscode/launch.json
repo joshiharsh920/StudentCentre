@@ -15,6 +15,18 @@
       "skipFiles": [
         "<node_internals>/**"
       ]
+    },
+    {
+      "name": "Attach to CAP on CF",
+      "request": "attach",
+      "type": "node",
+      "address": "localhost",
+      "port": 9229,
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": "/home/vcap/app",
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
     }
   ]
 }

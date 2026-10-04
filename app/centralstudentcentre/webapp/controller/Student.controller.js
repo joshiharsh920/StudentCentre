@@ -100,7 +100,7 @@ sap.ui.define([
 
         _getBackendErrors(oModel) {
             return Messaging.getMessageModel().getData().filter((oMessage) =>
-                oMessage.getProcessor() === oModel && oMessage.getType() === "Error"
+               oMessage.getType() === "Error"
             );
         },
 

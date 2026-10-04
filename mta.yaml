@@ -25,6 +25,9 @@ modules:
       memory: 256M
       disk-quota: 512M
 
+    properties:
+     NODE_OPTIONS: "--inspect=0.0.0.0:9229"
+
     build-parameters:
       builder: npm-ci
 

@@ -79,6 +79,7 @@ export default class StudentService extends cds.ApplicationService {
 
         this.on("updateApplicationStatus", async (req) => {
             const { applicationID, decision, remarks } = req.data;
+            console.log(req.data);
             const status = String(decision ?? "").toUpperCase();
 
             console.log("BPA applicationID:", applicationID);

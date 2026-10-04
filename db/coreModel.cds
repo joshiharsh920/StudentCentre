@@ -133,20 +133,8 @@ context workflow {
         workflowInstanceID : String(100);
         verifiedAt         : Timestamp;
         verifiedBy         : String(255);
-
-        documents          : Composition of many Documents
-                                 on documents.application = $self;
     }
 
-    entity Documents : cuid, managed {
-        application      : Association to Applications;
-        documentType     : String(50);
-        fileName         : String(255);
-        mimeType         : String(100);
-        storageReference : String(500);
-        status           : VerificationStatus default 'PENDING';
-        rejectionReason  : String(1000);
-    }
 
     entity VerificationTasks : cuid, managed {
         application : Association to Applications;

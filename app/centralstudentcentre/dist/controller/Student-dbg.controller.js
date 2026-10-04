@@ -14,6 +14,7 @@ sap.ui.define([
             this.clearStudentData();
         },
         clearStudentData: function () {
+            this._academicDocuments = new Map();
             this.getView().setBindingContext(null);
             if (this._oStudentBinding) {
                 this._oStudentBinding.destroy();
@@ -41,19 +42,65 @@ sap.ui.define([
 
         onAddAcademicRecord() {
             this.byId("academicRecordsTable").getBinding("items").create({
+                // Keep a stable key when deep creation replaces child contexts.
+                ID: crypto.randomUUID(),
                 qualification: "",
                 board: "",
                 institution: "",
                 passingYear: null,
                 obtainedMarks: null,
                 maximumMarks: null,
-                percentage: null
+                percentage: null,
+                documentFileName: null,
+                documentMimeType: null
             });
+        },
+
+        onAcademicDocumentChange(oEvent) {
+            const oFile = oEvent.getParameter("files")?.[0];
+            if (!oFile) {
+                return;
+            }
+            const oContext = oEvent.getSource().getBindingContext();
+            this._academicDocuments.set(oContext.getProperty("ID"), oFile);
+            oContext.setProperty("documentFileName", oFile.name);
+            oContext.setProperty("documentMimeType", oFile.type || "application/octet-stream");
+        },
+
+        async _uploadAcademicDocuments() {
+            if (!this._academicDocuments.size) {
+                return;
+            }
+            const sServiceRoot = this.getOwnerComponent().getManifestEntry(
+                "/sap.app/dataSources/mainService/uri"
+            ).replace(/\/$/, "");
+            const oTokenResponse = await fetch(`${sServiceRoot}/`, {
+                credentials: "same-origin",
+                headers: { "X-CSRF-Token": "Fetch" }
+            });
+            if (!oTokenResponse.ok) {
+                throw new Error("Could not prepare document upload. Please submit again.");
+            }
+            const sToken = oTokenResponse.headers.get("X-CSRF-Token");
+            for (const [sRecordID, oFile] of this._academicDocuments) {
+                const mHeaders = { "Content-Type": oFile.type || "application/octet-stream" };
+                if (sToken) {
+                    mHeaders["X-CSRF-Token"] = sToken;
+                }
+                const oResponse = await fetch(
+                    `${sServiceRoot}/AcademicRecords(${sRecordID})/document`,
+                    { method: "PUT", credentials: "same-origin", headers: mHeaders, body: oFile }
+                );
+                if (!oResponse.ok) {
+                    throw new Error(`Could not upload ${oFile.name}. Please submit again to retry.`);
+                }
+                this._academicDocuments.delete(sRecordID);
+            }
         },
 
         _getBackendErrors(oModel) {
             return Messaging.getMessageModel().getData().filter((oMessage) =>
-                oMessage.getProcessor() === oModel && oMessage.getType() === "Error"
+               oMessage.getType() === "Error"
             );
         },
 
@@ -86,6 +133,8 @@ sap.ui.define([
                     MessageBox.error(sMessage || "The student could not be saved. Check your entries and try again.");
                     return;
                 }
+                // Media uploads require persisted academic records.
+                await this._uploadAcademicDocuments();
                 // Get the ID of the Student that was just created
                 const oStudentContext = oView.getBindingContext();
                 const sApplicationID = oStudentContext.getProperty("ID");
@@ -108,10 +157,22 @@ sap.ui.define([
         },
 
         onExit() {
+            this._academicDocuments.clear();
             this.getView().setBindingContext(null);
             if (this._oStudentBinding) {
                 this._oStudentBinding.resetChanges();
                 this._oStudentBinding.destroy();
+            }
+        },
+        onMarksChange: function (oEvent) {
+            const oInput = oEvent.getSource();
+            const oItem = oInput.getParent();
+            const oContext = oItem.getBindingContext();
+            const oRecord = oContext.getObject();
+
+            if (oRecord.obtainedMarks !== null && oRecord.maximumMarks !== null && oRecord.maximumMarks !== 0) {
+                const percentage = (oRecord.obtainedMarks / oRecord.maximumMarks) * 100;
+                oContext.setProperty("percentage", percentage.toFixed(2));
             }
         }
     });
